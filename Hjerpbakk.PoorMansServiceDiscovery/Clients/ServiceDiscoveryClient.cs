@@ -66,7 +66,7 @@ namespace Hjerpbakk.PoorMansServiceDiscovery.Clients
 		// TODO: All service registring should go through this service
 		public async Task PublishService(Service service) {
             services.AddOrUpdate(service.Name, service, (a, b) => service);
-            var serviceArray = services.Values.Where(s => s.Name != "service-discovery-service").ToArray();
+            var serviceArray = services.Values.Where(s => s.Name != "service-discovery-service" && s.Name != service.Name).ToArray();
 			var jsonContent = JsonConvert.SerializeObject(service);
 			var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
             foreach(var theService in serviceArray) {
