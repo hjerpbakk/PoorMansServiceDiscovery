@@ -11,13 +11,13 @@ az acr login --name dipsbot
 docker tag service-discovery dipsbot.azurecr.io/service-discovery
 
 # Run container locally
-# docker run -p 5000:80 kitchen-responsible
+# docker run -p 5000:80 service-discovery
 docker push dipsbot.azurecr.io/service-discovery
 
 # Run in Azure Container Instances
 # az acr show --name dipsbot --query loginServer
 # az acr credential show --name dipsbot --query "passwords[0].value"
-az container delete --name service-discovery --resource-group kitchen-responsible-rg --yes
+az container delete --name service-discovery-service --resource-group kitchen-responsible-rg --yes
 az container create --name service-discovery-service --image dipsbot.azurecr.io/service-discovery --cpu 1 --memory 1 --registry-password $AZUREPW --ip-address public -g kitchen-responsible-rg
 
 container_status=$(az container show --name service-discovery-service --resource-group kitchen-responsible-rg --query state)

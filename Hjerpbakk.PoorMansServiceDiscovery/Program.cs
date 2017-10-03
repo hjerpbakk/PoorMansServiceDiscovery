@@ -21,6 +21,7 @@ namespace Hjerpbakk.PoorMansServiceDiscovery
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseApplicationInsights()
                 .Build();
     }
 }

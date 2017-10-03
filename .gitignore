@@ -287,3 +287,4 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 Hjerpbakk.PoorMansServiceDiscovery/config.json
+service-discovery-service.txt
