@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using Hjerpbakk.ServiceDiscoveryClient.Model;
+using Hjerpbakk.ServiceDiscovery.Client.Model;
 using Newtonsoft.Json;
 
-namespace Hjerpbakk.ServiceDiscoveryClient
+namespace Hjerpbakk.ServiceDiscovery.Client
 {
     public class ServiceDiscoveryClient
     {

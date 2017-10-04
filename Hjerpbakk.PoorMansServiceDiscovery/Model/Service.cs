@@ -1,4 +1,4 @@
-using Hjerpbakk.ServiceDiscoveryClient.Model;
+using Hjerpbakk.ServiceDiscovery.Client.Model;
 
 namespace Hjerpbakk.PoorMansServiceDiscovery.Model
 {

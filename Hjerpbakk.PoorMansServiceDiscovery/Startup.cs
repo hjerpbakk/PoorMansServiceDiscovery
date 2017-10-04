@@ -34,7 +34,7 @@ namespace Hjerpbakk.PoorMansServiceDiscovery
             var httpClient = new HttpClient {
                 Timeout = TimeSpan.FromSeconds(15D)
             };
-            var serviceDiscoveryClient = new Client(blobStorageConfiguration, httpClient);
+            var serviceDiscoveryClient = new ServiceDiscoveryClient(blobStorageConfiguration, httpClient);
             serviceDiscoveryClient.GetServices().GetAwaiter();
             services.AddSingleton(blobStorageConfiguration);
             services.AddSingleton(serviceDiscoveryClient);

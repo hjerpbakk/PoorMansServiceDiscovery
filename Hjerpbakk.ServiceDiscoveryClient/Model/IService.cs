@@ -1,5 +1,4 @@
-﻿using System;
-namespace Hjerpbakk.ServiceDiscoveryClient.Model
+﻿namespace Hjerpbakk.ServiceDiscovery.Client.Model
 {
     public interface IService
     {

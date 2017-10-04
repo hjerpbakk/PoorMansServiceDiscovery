@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 
 namespace Hjerpbakk.PoorMansServiceDiscovery.Clients
 {
-    public class Client
+    public class ServiceDiscoveryClient
     {
         const string ContainerName = "discovery";
 
@@ -25,7 +25,7 @@ namespace Hjerpbakk.PoorMansServiceDiscovery.Clients
 
         readonly ConcurrentDictionary<string, Service> services;
 
-        public Client(BlobStorageConfiguration blobStorageConfiguration, HttpClient httpClient)
+        public ServiceDiscoveryClient(BlobStorageConfiguration blobStorageConfiguration, HttpClient httpClient)
 		{
 			var storageAccount = CloudStorageAccount.Parse(blobStorageConfiguration.ConnectionString);
 

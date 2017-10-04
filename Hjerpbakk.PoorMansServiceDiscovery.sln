@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hjerpbakk.PoorMansServiceDiscovery", "Hjerpbakk.PoorMansServiceDiscovery\Hjerpbakk.PoorMansServiceDiscovery.csproj", "{251F4DF3-5628-4FC5-823B-D929DF5A4622}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hjerpbakk.ServiceDiscoveryClient", "Hjerpbakk.ServiceDiscoveryClient\Hjerpbakk.ServiceDiscoveryClient.csproj", "{F13FBEB8-F63C-423F-A287-19961A175439}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hjerpbakk.ServiceDiscovery.Client", "Hjerpbakk.ServiceDiscoveryClient\Hjerpbakk.ServiceDiscovery.Client.csproj", "{F13FBEB8-F63C-423F-A287-19961A175439}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
