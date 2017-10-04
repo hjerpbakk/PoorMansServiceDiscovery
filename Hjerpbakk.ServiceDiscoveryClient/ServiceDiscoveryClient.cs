@@ -16,12 +16,12 @@ namespace Hjerpbakk.ServiceDiscovery.Client
             serviceDiscoveryURL = "http://" + serviceDiscoveryServerName + "/api/services/";
         }
 
-        public string FormatServiceURL(string ip) => "http://" + ip + "/api/";
+        public string FormattedServiceURL(string ip) => "http://" + ip + "/api/";
 
         public async Task<string> GetServiceURL(string serviceName) {
 			var service = await httpClient.GetStringAsync(serviceDiscoveryURL + serviceName);
 			var serviceURL = JsonConvert.DeserializeObject<Service>(service).IP;
-            return FormatServiceURL(serviceURL);
+            return FormattedServiceURL(serviceURL);
         }
 	}
 }
