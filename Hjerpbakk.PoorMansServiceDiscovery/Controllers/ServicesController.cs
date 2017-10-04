@@ -12,9 +12,9 @@ namespace Hjerpbakk.PoorMansServiceDiscovery.Controllers
     [Route("api/[controller]")]
     public class ServicesController : Controller
     {
-        readonly ServiceDiscoveryClient serviceDiscoveryClient;
+        readonly Client serviceDiscoveryClient;
         
-        public ServicesController(ServiceDiscoveryClient serviceDiscoveryClient) {
+        public ServicesController(Client serviceDiscoveryClient) {
             this.serviceDiscoveryClient = serviceDiscoveryClient;
         }
 

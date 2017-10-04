@@ -34,10 +34,10 @@ namespace Hjerpbakk.PoorMansServiceDiscovery
             var httpClient = new HttpClient {
                 Timeout = TimeSpan.FromSeconds(15D)
             };
-            var serviceDiscoveryClient = new ServiceDiscoveryClient(blobStorageConfiguration, httpClient);
+            var serviceDiscoveryClient = new Client(blobStorageConfiguration, httpClient);
             serviceDiscoveryClient.GetServices().GetAwaiter();
             services.AddSingleton(blobStorageConfiguration);
-            services.AddSingleton<ServiceDiscoveryClient>(serviceDiscoveryClient);
+            services.AddSingleton(serviceDiscoveryClient);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

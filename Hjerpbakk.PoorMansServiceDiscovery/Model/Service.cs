@@ -1,6 +1,8 @@
+using Hjerpbakk.ServiceDiscoveryClient.Model;
+
 namespace Hjerpbakk.PoorMansServiceDiscovery.Model
 {
-    public struct Service
+    public struct Service : IService
     {
         static readonly char[] servicePostfix;
 
@@ -14,12 +16,12 @@ namespace Hjerpbakk.PoorMansServiceDiscovery.Model
             IP = ip.TrimEnd('\n').Trim('"');
         }
 
-        public string Name { get; set; }
-        public string IP { get; set; }
+		public string Name { get; set; }
+		public string IP { get; set; }
 
-        public override string ToString()
-        {
-            return string.Format("[Service: Name={0}, IP={1}]", Name, IP);
-        }
+		public override string ToString()
+		{
+			return string.Format("[Service: Name={0}, IP={1}]", Name, IP);
+		}
     }
 }
