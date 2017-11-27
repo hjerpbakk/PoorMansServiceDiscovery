@@ -1,5 +1,3 @@
 ﻿{
-  "BlobStorageAccessKey": "[blobStorageAccessKey]",
-  "BlobStorageAccountName": "[blobStorageAccountName]",
-  "BlobStorageEndpointSuffix": "[endpointSuffix]"
+  "BlobStorageConnectionString": "[BlobStorageConnectionString]"
 }

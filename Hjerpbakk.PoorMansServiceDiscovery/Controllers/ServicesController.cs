@@ -34,7 +34,7 @@ namespace Hjerpbakk.PoorMansServiceDiscovery.Controllers
         [HttpPost]
         public async Task Post([FromBody]Service service)
         {
-            await serviceDiscoveryClient.PublishService(service);
+            await serviceDiscoveryClient.PublishServiceURLChangeToRegisteredServices(service);
         }
     }
 }

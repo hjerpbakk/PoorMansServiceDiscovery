@@ -1,8 +1,8 @@
-using Hjerpbakk.ServiceDiscovery.Client.Model;
+using System;
 
 namespace Hjerpbakk.PoorMansServiceDiscovery.Model
 {
-    public struct Service : IService
+    public struct Service
     {
         static readonly char[] servicePostfix;
 
@@ -14,10 +14,12 @@ namespace Hjerpbakk.PoorMansServiceDiscovery.Model
         public Service(string fileName, string ip) {
             Name = fileName.TrimEnd(servicePostfix);
             IP = ip.TrimEnd('\n').Trim('"');
+            LastSeen = DateTime.MinValue;
         }
 
 		public string Name { get; set; }
 		public string IP { get; set; }
+        public DateTime LastSeen { get; set; }
 
 		public override string ToString()
 		{

@@ -25,9 +25,9 @@ namespace Hjerpbakk.PoorMansServiceDiscovery.Clients
 
         readonly ConcurrentDictionary<string, Service> services;
 
-        public ServiceDiscoveryClient(BlobStorageConfiguration blobStorageConfiguration, HttpClient httpClient)
+        public ServiceDiscoveryClient(IBlobStorageConfiguration blobStorageConfiguration, HttpClient httpClient)
 		{
-			var storageAccount = CloudStorageAccount.Parse(blobStorageConfiguration.ConnectionString);
+            var storageAccount = CloudStorageAccount.Parse(blobStorageConfiguration.BlobStorageConnectionString);
 
 			blobClient = storageAccount.CreateCloudBlobClient();
 
@@ -64,7 +64,7 @@ namespace Hjerpbakk.PoorMansServiceDiscovery.Clients
         }
 
 		// TODO: All service registring should go through this service
-		public async Task PublishService(Service service) {
+        public async Task PublishServiceURLChangeToRegisteredServices(Service service) {
             services.AddOrUpdate(service.Name, service, (a, b) => service);
             var serviceArray = services.Values.Where(s => s.Name != "service-discovery-service" && s.Name != service.Name).ToArray();
 			var jsonContent = JsonConvert.SerializeObject(service);

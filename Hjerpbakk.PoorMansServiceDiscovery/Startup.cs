@@ -36,7 +36,7 @@ namespace Hjerpbakk.PoorMansServiceDiscovery
             };
             var serviceDiscoveryClient = new ServiceDiscoveryClient(blobStorageConfiguration, httpClient);
             serviceDiscoveryClient.GetServices().GetAwaiter();
-            services.AddSingleton(blobStorageConfiguration);
+            services.AddSingleton<IBlobStorageConfiguration>(blobStorageConfiguration);
             services.AddSingleton(serviceDiscoveryClient);
         }
 
@@ -51,9 +51,9 @@ namespace Hjerpbakk.PoorMansServiceDiscovery
             app.UseMvc();
         }
 
-        static BlobStorageConfiguration ReadBlobStorageConfig()
+        static AppConfiguration ReadBlobStorageConfig()
 		{
-			return JsonConvert.DeserializeObject<BlobStorageConfiguration>(File.ReadAllText("config.json"));
+			return JsonConvert.DeserializeObject<AppConfiguration>(File.ReadAllText("config.json"));
 		}
     }
 }
