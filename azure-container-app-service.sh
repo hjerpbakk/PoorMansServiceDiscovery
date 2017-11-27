@@ -3,7 +3,7 @@ set -e
 
 container_registry_name="dipscontainerregistry"
 container_name="service-discovery"
-tagged_container_name="dipsbot.azurecr.io/"$container_name
+tagged_container_name=$container_registry_name".azurecr.io/"$container_name
 service_name=$container_name"-service"
 
 # Needs: brew install azure-cli
