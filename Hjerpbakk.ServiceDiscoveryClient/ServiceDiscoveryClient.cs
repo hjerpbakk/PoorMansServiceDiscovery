@@ -13,10 +13,10 @@ namespace Hjerpbakk.ServiceDiscovery.Client
         public ServiceDiscoveryClient(HttpClient httpClient, string serviceDiscoveryServerName)
         {
             this.httpClient = httpClient;
-            serviceDiscoveryURL = "http://" + serviceDiscoveryServerName + "/api/services/";
+            serviceDiscoveryURL = serviceDiscoveryServerName + "/api/services/";
         }
 
-        public string FormattedServiceURL(string ip) => "http://" + ip + "/api/";
+        public string FormattedServiceURL(string ip) => ip + "/api/";
 
         public async Task<string> GetServiceURL(string serviceName) {
 			var service = await httpClient.GetStringAsync(serviceDiscoveryURL + serviceName);
