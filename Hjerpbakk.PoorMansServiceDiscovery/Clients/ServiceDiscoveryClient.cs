@@ -65,6 +65,21 @@ namespace Hjerpbakk.PoorMansServiceDiscovery.Clients
 
 		// TODO: All service registring should go through this service
         public async Task PublishServiceURLChangeToRegisteredServices(Service service) {
+            if (string.IsNullOrEmpty(service.IP) || string.IsNullOrEmpty(service.Name)) {
+                return;
+            }
+
+            Uri url;
+            try
+            {
+                url = new Uri(service.IP);
+            }
+            catch (Exception ex)
+            {
+                // TODO: report 
+                return;
+            }
+
             services.AddOrUpdate(service.Name, service, (a, b) => service);
             var serviceArray = services.Values.Where(s => s.Name != "service-discovery-service" && s.Name != service.Name).ToArray();
 			var jsonContent = JsonConvert.SerializeObject(service);
@@ -72,13 +87,13 @@ namespace Hjerpbakk.PoorMansServiceDiscovery.Clients
             foreach(var theService in serviceArray) {
                 try
                 {
-                    await httpClient.PostAsync("http://" + theService.IP + "/api/services", content);
+                    await httpClient.PostAsync(url.AbsoluteUri + "/api/services", content);
                 }
                 catch (Exception)
                 {
 					// TODO: What to do if crashing?
 				}
-                //var response = await httpClient.PostAsync("http://" + theService.IP + "/api/services", content);
+                //var response = await httpClient.PostAsync("theService.IP + "/api/services", content);
 			    //if (response.StatusCode == HttpStatusCode.OK)
 			    //{
                 //return;
