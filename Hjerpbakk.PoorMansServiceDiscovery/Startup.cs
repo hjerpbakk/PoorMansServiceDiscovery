@@ -48,6 +48,7 @@ namespace Hjerpbakk.PoorMansServiceDiscovery
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
             app.UseMvc();
         }
 
