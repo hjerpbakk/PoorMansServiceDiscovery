@@ -23,5 +23,7 @@ namespace Hjerpbakk.ServiceDiscovery.Client
 			var serviceURL = JsonConvert.DeserializeObject<Service>(service).IP;
             return FormattedServiceURL(serviceURL);
         }
+
+
 	}
 }

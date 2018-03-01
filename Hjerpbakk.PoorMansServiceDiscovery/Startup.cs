@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Hjerpbakk.PoorMansServiceDiscovery.Clients;
 using Hjerpbakk.PoorMansServiceDiscovery.Configuration;
+using Hjerpbakk.PoorMansServiceDiscovery.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,7 @@ namespace Hjerpbakk.PoorMansServiceDiscovery
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddMemoryCache();
 
             var blobStorageConfiguration = ReadBlobStorageConfig();
             var httpClient = new HttpClient {
@@ -38,6 +40,7 @@ namespace Hjerpbakk.PoorMansServiceDiscovery
             serviceDiscoveryClient.GetServices().GetAwaiter();
             services.AddSingleton<IBlobStorageConfiguration>(blobStorageConfiguration);
             services.AddSingleton(serviceDiscoveryClient);
+            services.AddSingleton<ServiceDiscoveryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

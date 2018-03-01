@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +9,6 @@ using Hjerpbakk.PoorMansServiceDiscovery.Configuration;
 using Hjerpbakk.PoorMansServiceDiscovery.Model;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
-using Newtonsoft.Json;
 
 namespace Hjerpbakk.PoorMansServiceDiscovery.Clients
 {
@@ -23,84 +20,29 @@ namespace Hjerpbakk.PoorMansServiceDiscovery.Clients
         readonly CloudBlobContainer discoveryContainer;
         readonly HttpClient httpClient;
 
-        readonly ConcurrentDictionary<string, Service> services;
-
         public ServiceDiscoveryClient(IBlobStorageConfiguration blobStorageConfiguration, HttpClient httpClient)
-		{
+        {
             var storageAccount = CloudStorageAccount.Parse(blobStorageConfiguration.BlobStorageConnectionString);
 
-			blobClient = storageAccount.CreateCloudBlobClient();
+            blobClient = storageAccount.CreateCloudBlobClient();
 
-			discoveryContainer = blobClient.GetContainerReference(ContainerName);
-			discoveryContainer.CreateIfNotExistsAsync().GetAwaiter();
+            discoveryContainer = blobClient.GetContainerReference(ContainerName);
+            discoveryContainer.CreateIfNotExistsAsync().GetAwaiter();
 
             this.httpClient = httpClient;
-            services = new ConcurrentDictionary<string, Service>();
         }
 
-        public async Task<IEnumerable<Service>> GetServices() {
-            var token = new BlobContinuationToken();
-			var blobs = await discoveryContainer.ListBlobsSegmentedAsync(token);
-            services.Clear();
-            foreach (var blob in blobs.Results.Cast<CloudBlockBlob>())
-            {
-                var ip = "";
-                using (var memoryStream = new MemoryStream())
-                {
-                	await blob.DownloadToStreamAsync(memoryStream);
-                	ip = Encoding.UTF8.GetString(memoryStream.ToArray());
-                }
-
-                var service = new Service(blob.Name, ip);
-                services.AddOrUpdate(service.Name, service, (a, b) => service);
-            }
-
-            return services.Values;
-        }
-
-        public Service GetService(string serviceName)
+        public async Task<IEnumerable<CloudBlockBlob>> GetServices()
         {
-            return services[serviceName];
+            var token = new BlobContinuationToken();
+            var blobs = await discoveryContainer.ListBlobsSegmentedAsync(token);
+            return blobs.Results.Cast<CloudBlockBlob>();
         }
 
-		// TODO: All service registring should go through this service
-        public async Task PublishServiceURLChangeToRegisteredServices(Service service) {
-            if (string.IsNullOrEmpty(service.IP) || string.IsNullOrEmpty(service.Name)) {
-                return;
-            }
+        public CloudBlockBlob GetService(string serviceName) => 
+            discoveryContainer.GetBlockBlobReference(serviceName);
 
-            Uri url;
-            try
-            {
-                url = new Uri(service.IP);
-            }
-            catch (Exception ex)
-            {
-                // TODO: report 
-                return;
-            }
-
-            services.AddOrUpdate(service.Name, service, (a, b) => service);
-            var serviceArray = services.Values.Where(s => s.Name != "service-discovery-service" && s.Name != service.Name).ToArray();
-			var jsonContent = JsonConvert.SerializeObject(service);
-			var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-            foreach(var theService in serviceArray) {
-                try
-                {
-                    await httpClient.PostAsync(url.AbsoluteUri + "/api/services", content);
-                }
-                catch (Exception)
-                {
-					// TODO: What to do if crashing?
-				}
-                //var response = await httpClient.PostAsync("theService.IP + "/api/services", content);
-			    //if (response.StatusCode == HttpStatusCode.OK)
-			    //{
-                //return;
-			    //}
-
-                //throw new Exception("An error occurred: \n" + response);
-            }
-        }
+        public async Task Register(string serviceName, string serializedService) => 
+            await GetService(serviceName).UploadTextAsync(serializedService);
     }
 }

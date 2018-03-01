@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Hjerpbakk.PoorMansServiceDiscovery.Clients;
 using Hjerpbakk.PoorMansServiceDiscovery.Model;
+using Hjerpbakk.PoorMansServiceDiscovery.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hjerpbakk.PoorMansServiceDiscovery.Controllers
@@ -12,29 +10,25 @@ namespace Hjerpbakk.PoorMansServiceDiscovery.Controllers
     [Route("api/[controller]")]
     public class ServicesController : Controller
     {
-        readonly ServiceDiscoveryClient serviceDiscoveryClient;
+        readonly ServiceDiscoveryService serviceDiscoveryService;
         
-        public ServicesController(ServiceDiscoveryClient serviceDiscoveryClient) {
-            this.serviceDiscoveryClient = serviceDiscoveryClient;
+        public ServicesController(ServiceDiscoveryService serviceDiscoveryService) {
+            this.serviceDiscoveryService = serviceDiscoveryService;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Service>> Get()
-        {
-            var services = await serviceDiscoveryClient.GetServices();
-            return services;
-        }
+        public async Task<IEnumerable<Service>> Get() => await serviceDiscoveryService.GetServices();
 
         [HttpGet("{serviceName}")]
-        public Service Get(string serviceName)
-        {
-            return serviceDiscoveryClient.GetService(serviceName);
-        }
+        public async Task<Service> Get(string serviceName) {
+            if (serviceName == null) {
+                throw new ArgumentNullException(nameof(serviceName));    
+            }
+
+            return await serviceDiscoveryService.GetService(serviceName);
+        } 
 
         [HttpPost]
-        public async Task Post([FromBody]Service service)
-        {
-            await serviceDiscoveryClient.PublishServiceURLChangeToRegisteredServices(service);
-        }
+        public async Task Post([FromBody]Service service) => await serviceDiscoveryService.Register(service);
     }
 }

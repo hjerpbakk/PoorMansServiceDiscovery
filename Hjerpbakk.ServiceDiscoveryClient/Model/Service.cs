@@ -1,6 +1,6 @@
 ﻿namespace Hjerpbakk.ServiceDiscovery.Client.Model
 {
-    struct Service : IService
+    struct Service
     {
         public Service(string name, string ip)
         {
