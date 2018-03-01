@@ -7,12 +7,14 @@ namespace Hjerpbakk.PoorMansServiceDiscovery.Controllers
     [Route("/")]
     public class VersionController : Controller
     {
-        bool debugging;
+        static bool debugging;
+
+        static VersionController() => CheckIfDEBUG();
 
         [HttpGet]
         public string Get() => $"{Assembly.GetExecutingAssembly().GetName().Version} {(debugging ? "DEBUG" : "RELEASE")}";
 
         [Conditional("DEBUG")]
-        void CheckIfDEBUG() => debugging = true;
+        static void CheckIfDEBUG() => debugging = true;
     }
 }
