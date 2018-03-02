@@ -30,7 +30,8 @@ namespace Hjerpbakk.ServiceDiscovery.Client
         public async Task Heartbeat(Service service) {
             var serializedService = JsonConvert.SerializeObject(service);
             var content = new StringContent(serializedService, Encoding.UTF8, "application/json");
-            await httpClient.PostAsync(serviceDiscoveryURL + apiKey, content);
+            var response = await httpClient.PostAsync(serviceDiscoveryURL + apiKey, content);
+            response.EnsureSuccessStatusCode();
         }
 	}
 }
