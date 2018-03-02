@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
+using Hjerpbakk.PoorMansServiceDiscovery.Authentication;
 using Hjerpbakk.PoorMansServiceDiscovery.Clients;
 using Hjerpbakk.PoorMansServiceDiscovery.Configuration;
 using Hjerpbakk.PoorMansServiceDiscovery.Services;
@@ -11,8 +9,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace Hjerpbakk.PoorMansServiceDiscovery
@@ -32,13 +28,14 @@ namespace Hjerpbakk.PoorMansServiceDiscovery
             services.AddMvc();
             services.AddMemoryCache();
 
-            var blobStorageConfiguration = ReadBlobStorageConfig();
+            var config = JsonConvert.DeserializeObject<AppConfiguration>(File.ReadAllText("config.json"));
             var httpClient = new HttpClient {
                 Timeout = TimeSpan.FromSeconds(15D)
             };
-            var serviceDiscoveryClient = new ServiceDiscoveryClient(blobStorageConfiguration, httpClient);
+            var serviceDiscoveryClient = new ServiceDiscoveryClient(config, httpClient);
             serviceDiscoveryClient.GetServices().GetAwaiter();
-            services.AddSingleton<IBlobStorageConfiguration>(blobStorageConfiguration);
+            services.AddSingleton<IBlobStorageConfiguration>(config);
+            services.AddSingleton<IClientConfiguration>(config);
             services.AddSingleton(serviceDiscoveryClient);
             services.AddSingleton<ServiceDiscoveryService>();
         }
@@ -52,12 +49,8 @@ namespace Hjerpbakk.PoorMansServiceDiscovery
             }
 
             app.UseStaticFiles();
+            app.UseMiddleware<CertificateAuthenticationMiddleware>();
             app.UseMvc();
         }
-
-        static AppConfiguration ReadBlobStorageConfig()
-		{
-			return JsonConvert.DeserializeObject<AppConfiguration>(File.ReadAllText("config.json"));
-		}
     }
 }

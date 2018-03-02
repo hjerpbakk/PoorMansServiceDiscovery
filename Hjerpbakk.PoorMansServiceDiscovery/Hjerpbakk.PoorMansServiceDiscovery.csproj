@@ -8,6 +8,7 @@
     <Folder Include="wwwroot\" />
     <Folder Include="Model\" />
     <Folder Include="Services\" />
+    <Folder Include="Authentication\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />

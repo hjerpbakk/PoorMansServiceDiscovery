@@ -288,3 +288,4 @@ __pycache__/
 *.xsd.cs
 Hjerpbakk.PoorMansServiceDiscovery/config.json
 service-discovery-service.txt
+Hjerpbakk.ApiKeyGenerator/config.json

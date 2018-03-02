@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hjerpbakk.PoorMansServiceDi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hjerpbakk.ServiceDiscovery.Client", "Hjerpbakk.ServiceDiscoveryClient\Hjerpbakk.ServiceDiscovery.Client.csproj", "{F13FBEB8-F63C-423F-A287-19961A175439}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hjerpbakk.ApiKeyGenerator", "Hjerpbakk.ApiKeyGenerator\Hjerpbakk.ApiKeyGenerator.csproj", "{BC98DAA0-1C09-4BAA-8D30-8B4E160E59BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,5 +21,9 @@ Global
 		{F13FBEB8-F63C-423F-A287-19961A175439}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F13FBEB8-F63C-423F-A287-19961A175439}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F13FBEB8-F63C-423F-A287-19961A175439}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC98DAA0-1C09-4BAA-8D30-8B4E160E59BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC98DAA0-1C09-4BAA-8D30-8B4E160E59BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC98DAA0-1C09-4BAA-8D30-8B4E160E59BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC98DAA0-1C09-4BAA-8D30-8B4E160E59BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

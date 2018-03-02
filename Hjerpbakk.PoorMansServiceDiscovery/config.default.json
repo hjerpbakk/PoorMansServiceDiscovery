@@ -1,3 +1,6 @@
 ﻿{
-  "BlobStorageConnectionString": "[BlobStorageConnectionString]"
+  "BlobStorageConnectionString": "[BlobStorageConnectionString]",
+  "ApiKeys": [
+    "431de3172b8919fdf10d8664f4408b578ccbd27d2ae34e60119bc0c78553f540"
+  ]
 }
