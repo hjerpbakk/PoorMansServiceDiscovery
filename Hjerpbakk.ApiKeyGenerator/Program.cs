@@ -10,11 +10,10 @@ namespace Hjerpbakk.ApiKeyGenerator
     {
         static void Main(string[] args)
         {
-            const string App = "dips/insitescraper";
             var config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("config.json"));
 
             ASCIIEncoding encoding = new ASCIIEncoding();
-            Byte[] textBytes = encoding.GetBytes(App);
+            Byte[] textBytes = encoding.GetBytes(config.App);
             Byte[] keyBytes = encoding.GetBytes(config.Password);
 
             HMACSHA256 hash = new HMACSHA256(keyBytes);
